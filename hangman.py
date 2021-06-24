@@ -1,11 +1,17 @@
 #Hangman Game
-
+import os, platform
 from random import *
 import sys
 
 player_score = 0
 computer_score = 0
 
+def clear():
+    print(platform.system())
+    if platform.system() == "Windows":
+        os.system('cls')
+    else:
+        os.system('clear')
 def hangedman(hangman):
 
     graphic = [
@@ -113,11 +119,12 @@ def hangedman(hangman):
     return
 
 def start():
-
+    clear()
     print("Let's play a game of Linux Hangman.")
     while game():
         pass
     scores()
+    
 
 def game():
     try:
@@ -142,13 +149,12 @@ def game():
     letters_right = 0
     letters_wrong = 0
     global computer_score, player_score
-
     while (letters_wrong != tries) and ("".join(clue) != word):
-
         letter = guess_letter()
         if len(letter) == 1 and letter.isalpha():
             if letters_tried.find(letter) != -1:
                 print("You've alread picked",letter)
+                
             else:
                 letters_tried = letters_tried + letter
 
@@ -156,6 +162,7 @@ def game():
                 if first_index == -1:
                     letters_wrong += 1
                     print("Sorry",letter,"isn't what we're looking for.")
+                    
                 else:
                     print("Congo",letter,"is correct.")
                     for i in range(word_length):
@@ -164,6 +171,7 @@ def game():
 
         else:
             print("Choose another")
+
 
         hangedman(letters_wrong)
         print(" ".join(clue))
@@ -182,11 +190,11 @@ def game():
     return play_again()
 
 def guess_letter():
-    print()
     letter = input("Take a guess at our mystery word: ")
     letter.strip()
     letter.lower()
     print()
+    clear()
     return letter
 
 def play_again():
@@ -194,6 +202,7 @@ def play_again():
     if answer.lower() == 'q':
         print("Thank you very much for playing our game. See you next time.")
         return False
+    clear()
     return True
 
 def scores():
